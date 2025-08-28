@@ -1,3 +1,4 @@
+USE db_faculdade;
 -- Exercício 1: Crie uma função chamada idade_estudante que receba a data de nascimento de um estudante e retorne à idade.
 DELIMITER $$
 CREATE FUNCTION idade_estudante(nascimento DATE)
@@ -50,10 +51,9 @@ READS SQL DATA
 BEGIN
 	RETURN ( SELECT AVG(n.nota)
     FROM tb_notas AS N
-    LEFT JOIN tb_matriculas M ON N.id_matriculas = M.id_matriculas
-    LEFT JOIN tb_disciplina AS D ON M.id_disciplina = D.id_disciplina
+    LEFT JOIN tb_matriculas M ON N.id_matricula = M.id_matricula
+    LEFT JOIN tb_disciplinas AS D ON M.id_disciplina = D.id_disciplina
     WHERE D.id_curso = idCurso);
 END $$
 
-DROP FUNCTION medias_notas_curso $$
 SELECT medias_notas_curso(1) $$
