@@ -1,0 +1,78 @@
+db.produtos.insertMany(
+  [
+    {nome: 'Tablet', preco: 1500, estoque: 100},
+    {nome: 'Playstation 2', preco: 10000 , estoque: 1},
+    {nome: 'Mouse', preco: 10},
+    {nome: 'Mouse sem-fio', preco: 99}
+  ]
+)
+
+db.produtos.insertOne({
+    nome: "intel 386",
+    preco: 999,
+    estoque: 10,
+    categorias: ["processador", "computador"],
+    pecas: [{nomePeca: 'processador'}, {nomePeca: 'Manual do Usuário'}]
+
+});
+
+
+// Filtros
+db.produtos.find({preco: {$gt: 100}}) // >
+db.produtos.find({preco: {$gt: 100}}) // <
+db.produtos.find({preco: {$gt: 100}}) // >=
+db.produtos.find({preco: {$gt: 100}}) // <=
+db.produtos.find({preco: {$gt: 100}}) // ==
+
+
+db.produtos.find({categorias: {$in: ['computador']}}) // existe
+db.produtos.find({categorias: {$nin: ['computador']}}) // no existe
+
+db.produtos.find({nome: {$exists: false}}) //retorna um objeto sem o campo selecionado
+
+db.produtos.find({preco: {$type: 'int'}})
+
+db.produtos.find({estoque: {$lt: 20}}, {nome: 1, preco: 1, _id: 0})
+
+db.produtos.find().sort({preco: 1})
+
+// SELECT COUNT(*) FROM produtos
+db.produtos.countDocuments()
+
+db.produtos.countDocuments({preco :{$gt: 100}})
+
+// select * from produtos where (preco > 100) and (estoque <20)
+db.produtos.find({
+    $and: [
+        {preco: {$gt: 100}}, 
+        {estoque: {$lt:  20}}
+    ]
+}
+)
+
+//
+db.produtos.find({
+    $or: [
+        {preco: {$gt: 100}}, 
+        {estoque: {$lt:  20}}
+    ]
+}
+)
+
+// Atualizar dados
+db.produtos.updateOne(
+    {nome: 'Notebook'},
+    {$set: {promocao: true}}
+)
+
+// Incremento
+db.produtos.updateOne(
+    {nome: 'Notebook'},
+    {$inc: {estoque: 3}}
+)
+
+//
+db.produtos.deleteOne
+db.produtos.deleteMany
+
+db.produtos.deleteOne({promocao: true})

@@ -1,0 +1,50 @@
+MongoDB server - https://www.mongodb.com/try/download/community 
+MongoDB Shell - https://www.mongodb.com/try/download/shell 
+
+Baixar versao ZIP e desipar em um pasta
+
+cmd //Prompt de comando windows
+cd <diretorio> //Muda o diretorio
+dir //Mostra o diretorio
+mkdir <nome da pasta> //Cria uma pasta no diretorio atual
+cls // limpa a tela
+
+
+>mongod --port 27017 --dbpath .\01
+Cntl+C // Mata o servidor
+
+>mongosh --port 27017
+exit
+
+show databases
+use lojinha
+db.createCollection("produtos")
+show collections
+
+// Documentos (Orientado a documento)
+// JSON
+{"nome": "Felipe",
+    "hobbies": [{"nomehobbie": "v1"}, {....}]  }
+
+{nomeDoLivro: "Othelo", 
+    emprestimos: [{usuario: id, data_devolucao: ""},
+                {usuario: id2, data_devolucao: ""},
+                ] }
+
+{nomeDoLivro: "Othelo2"
+                ] }
+
+{nomeDoLivro: "Othelo3"
+nomeAutor: "William Shakespeare"
+                ] }
+
+// Comandos
+// Insert
+db.produtos.insertOne({
+    nome : "Notebook",
+    preco: 3500,
+    estoque: 5
+})
+
+// Select
+db.produtos.find()
