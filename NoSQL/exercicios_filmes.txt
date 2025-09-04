@@ -1,0 +1,73 @@
+// 1- Crie/Use um DB chamado favoritos
+use favoritos
+
+// 2- Crie uma collection chamada filmes
+db.createCollection("Filmes")
+
+// 3- Inserir
+// Insira 3 novos filmes com anos, gêneros e atores diferentes.
+// Um dos filmes deve ter array de atores com pelo menos 2 objetos.
+db.filmes.insertMany([
+    {
+        titulo: "The Godfather",
+        ano: 1972,
+        genero: ["Gângster", "Crime"],
+        atores: [
+        { nome: "Al Pacino", personagem: "Michael Corleone" },
+        { nome: "Marlon Brando", personagem: "Don Corleone" }
+        ],
+        avaliacao: 9.2,
+        disponivelStreaming: true
+    },
+    {
+        titulo: "Platoon",
+        ano: 1986,
+        genero: ["Drama", "Guerra"],
+        atores: [
+        { nome: "Charlie Sheen", personagem: "Chris" },
+        { nome: "William Dafoe", personagem: "Sgt. Elias" }
+        ],
+        avaliacao: 8.1,
+        disponivelStreaming: true
+    },
+    {
+        titulo: "Gladiator",
+        ano: 2000,
+        genero: ["Ação", "Aventura"],
+        atores: [
+        { nome: "Russell Crowe", personagem: "Maximus" },
+        { nome: "Joaquin Phoenix", personagem: "Commodus" }
+        ],
+        avaliacao: 8.5,
+        disponivelStreaming: true
+    },
+])
+
+// 4- Selecione
+// a--Liste todos os filmes com avaliação maior que 8.
+db.filmes.find({avaliacao: {$gt: 8}})
+    
+// b--Liste filmes cujo título começa com "T" (case-insensitive).
+db.filmes.find({titulo: {$regex: "G"}})
+// c--Liste filmes que possuem o gênero "Drama".
+db.filmes.find({genero: {$in: ["Drama"]}})
+// d--Liste filmes que possuem o campo atores.
+db.filmes.find({atores: {$exists: true}})
+// e--Liste todos os filmes que possuem atores com o personagem “Cobb” e avaliação maior que 8.
+    db.filmes.find({
+    $and: [
+        {'atores.personagem': 'Don Corleone'}, 
+        {avaliacao: {$gt:  8}}
+    ]})
+
+// 5- Atualização
+// a- Aumente a avaliação de um filme em 0.2 pontos.
+db.filmes.updateOne({titulo: 'Platoon'}, {$inc: {avaliacao: 0.2}})
+// b- Marque um filme como não disponível para streaming.
+db.filmes.updateOne({titulo: 'The Godfather'}, {$set: {disponivelStreaming: false}})
+// c- Adicione um novo ator a um filme.
+db.filmes.updateOne({titulo: 'Gladiator'}, {$push: {atores: {nome: "Connie Nielsen", personagem: "Lucilla"}}})
+
+// 6- Agregação
+// Conte quantos filmes têm ano anterior a 2000.
+db.filmes.countDocuments({ano: {$lt: 2000}})

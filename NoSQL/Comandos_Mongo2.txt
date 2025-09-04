@@ -62,7 +62,7 @@ db.produtos.find({
 // Atualizar dados
 db.produtos.updateOne(
     {nome: 'Notebook'},
-    {$set: {promocao: true}}
+    {$set: {promocao: true}},
 )
 
 // Incremento
